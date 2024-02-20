@@ -1,11 +1,20 @@
+.App__headerRoot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  background-color: var(--color-black);
+}
+
 .App__header {
   display: flex;
   justify-content: space-between;
-  height: 56px;
-  background-color: var(--color-black);
   align-items: center;
+  width: 1200px;
+  max-width: 1200px;
   padding: 0px 40px;
 }
+
 .App__svgImage {
   display: flex;
 }

@@ -9,6 +9,8 @@ html {
   --color-black: rgba(0, 0, 0, 1);
   --color-background: rgba(19, 19, 19, 1);
   --color-yellow: #cfe955;
+  --color-pink: #f2b2d6;
+  --color-orange: #ffbc00;
 }
 
 body {
@@ -17,4 +19,16 @@ body {
   gap: 100px;
   background-color: var(--color-background);
   color: var(--color-white);
+}
+
+@font-face {
+  font-weight: 400;
+  font-family: "Oks Free";
+  src: url("../public/assets/fonts/Oks Free.otf");
+}
+
+@media (max-width: 580px) {
+  body {
+    gap: 50px;
+  }
 }
