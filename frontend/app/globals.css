@@ -4,10 +4,17 @@
   margin: 0;
 }
 
-html,
-body,
-main {
+html {
+  --color-white: rgba(255, 255, 255, 1);
+  --color-black: rgba(0, 0, 0, 1);
+  --color-background: rgba(19, 19, 19, 1);
+  --color-yellow: #cfe955;
+}
+
+body {
   display: flex;
   flex-direction: column;
   gap: 100px;
+  background-color: var(--color-background);
+  color: var(--color-white);
 }

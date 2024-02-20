@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main>
+      <main className={styles.main}>
         <Logo />
         <Info />
         <Table />
