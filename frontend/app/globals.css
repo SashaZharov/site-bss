@@ -21,6 +21,13 @@ body {
   color: var(--color-white);
 }
 
+.Section__title {
+  font-family: "Oks Free";
+  font-weight: 400;
+  font-size: 96px;
+  margin-bottom: 16px;
+}
+
 @font-face {
   font-weight: 400;
   font-family: "Oks Free";
