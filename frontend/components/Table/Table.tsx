@@ -4,7 +4,9 @@ import classNames from "classnames";
 const Table = () => {
   return (
     <section>
-      <h2 className="Section__title">Таблица</h2>
+      <h2 className="Section__title" id="Прайс лист">
+        Таблица
+      </h2>
       <div className={styles.Table__cardRoot}>
         <div
           className={classNames(styles.Table__card, styles.Table__cardItem1)}
@@ -14,7 +16,6 @@ const Table = () => {
         <div
           className={classNames(styles.Table__card, styles.Table__cardItem2)}
         >
-          <div></div>
           Просим также внимательно ознакомиться с индексом склада для
           организации самостоятельной доставки. <br /> <br /> Приплаты за
           мерность и малый вес указаны в конце ценника. Напоминаем, что любой
@@ -30,7 +31,11 @@ const Table = () => {
             Это относится к товарам, находящимся в производстве и ожидающим
             поступление в ближайший месяц
           </div>
-          <button>Скачать прайс лист</button>
+          <div className={styles.Table__cardButtonDiv}>
+            <button className={styles.Table__cardButton}>
+              Скачать прайс лист
+            </button>
+          </div>
         </div>
       </div>
     </section>

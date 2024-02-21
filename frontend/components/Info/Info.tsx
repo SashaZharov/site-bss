@@ -4,7 +4,9 @@ import classNames from "classnames";
 const Info = () => {
   return (
     <section>
-      <h2 className="Section__title">Важное</h2>
+      <h2 className="Section__title" id="Важное">
+        Важное
+      </h2>
       <div className={styles.Info__cardRoot}>
         <div className={classNames(styles.Info__card, styles.Info__cardItem1)}>
           <h3 className={styles.Info__title}>Оформление заявки</h3>

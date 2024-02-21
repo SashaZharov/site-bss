@@ -3,13 +3,18 @@ import styles from "./header.module.css";
 import Image from "next/image";
 import menu from "../../public/assets/img/Menu.svg";
 import logo from "../../public/assets/img/Logo.svg";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 
 const Header = () => {
   const tabs = ["Важное", "Прайс лист", "Контакты"];
   const [activeLink, setActiveLink] = useState("Важное");
   const [toggle, setToggle] = useState(false);
+
+  // useEffect(() => {
+  //   const section = document.getElementById("header");
+  //   console.log(section);
+  // }, []);
 
   const handleToggleClick = () => {
     setToggle(!toggle);
@@ -18,10 +23,14 @@ const Header = () => {
   const handleLinkClick = (link: string) => {
     setActiveLink(link);
     setToggle(false);
+    const section = document.getElementById(link);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
-    <header className={styles.App__headerRoot}>
+    <header className={styles.App__headerRoot} id="header">
       <div className={styles.App__header}>
         <div className={styles.App__headerIcon}>
           <Image className={styles.App__svgImage} src={logo} alt="" />

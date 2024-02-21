@@ -42,7 +42,7 @@
 .link__active {
   font-weight: 500;
   font-size: 18px;
-  color: var(--color-yellow);
+  color: var(--color-green);
 }
 
 @media (max-width: 580px) {
