@@ -1,5 +1,5 @@
 type ContactType = {
-  icon: "mail" | "phone" | "location";
+  icon: any;
   text: string;
 };
 
@@ -18,4 +18,4 @@ type ContactsProps = {
   data: ContactsData;
 };
 
-export type { ContactsProps, ContactType };
+export type { ContactsProps, ContactType, ButtonType };

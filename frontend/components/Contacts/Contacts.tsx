@@ -9,7 +9,7 @@ import { ContactType, ContactsProps } from "./contacts.types";
 const Contacts: React.FC<ContactsProps> = ({ data }) => {
   const { title, info, button } = data;
 
-  const icons = {
+  const icons: any = {
     mail,
     phone,
     location,
