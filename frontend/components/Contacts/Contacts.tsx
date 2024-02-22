@@ -4,12 +4,21 @@ import Image from "next/image";
 import mail from "../../public/assets/img/mail-icon.svg";
 import phone from "../../public/assets/img/phone-icon.svg";
 import location from "../../public/assets/img/location-icon.svg";
+import { ContactType, ContactsProps } from "./contacts.types";
 
-const Contacts = () => {
+const Contacts: React.FC<ContactsProps> = ({ data }) => {
+  const { title, info, button } = data;
+
+  const icons = {
+    mail,
+    phone,
+    location,
+  };
+
   return (
     <section>
       <h2 className="Section__title" id="Контакты">
-        Контакты
+        {title}
       </h2>
       <div className={styles.Contacts__cardRoot}>
         <div
@@ -27,23 +36,16 @@ const Contacts = () => {
           )}
         >
           <div className={styles.Contact__infoSection}>
-            <div className={styles.Contact__infoCell}>
-              <Image src={mail} alt="" /> <div>bss.spb@mail.ru</div>
-            </div>
-            <div className={styles.Contact__infoCell}>
-              <Image src={phone} alt="" /> <div>(812) 924-6930</div>
-            </div>
-            <div className={styles.Contact__infoCell}>
-              <Image src={location} alt="" />
-              <div>
-                г. Санкт-Петербург, Пушкинский район, посёлок Шушары, д 249  и
-                далее 100м к синему крану
+            {info.map((contact: ContactType, index: number) => (
+              <div key={index} className={styles.Contact__infoCell}>
+                <Image src={icons[contact.icon]} alt="" />
+                <div>{contact.text}</div>
               </div>
-            </div>
+            ))}
           </div>
           <div className={styles.Contact__cardButtonDiv}>
             <button className={styles.Contact__cardButton}>
-              Скачать реквезиты
+              {button.text}
             </button>
           </div>
         </div>

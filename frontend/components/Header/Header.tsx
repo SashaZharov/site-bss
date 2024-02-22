@@ -32,12 +32,12 @@ const Header = () => {
   return (
     <header className={styles.App__headerRoot} id="header">
       <div className={styles.App__header}>
-        <div className={styles.App__headerIcon}>
-          <Image className={styles.App__svgImage} src={logo} alt="" />
+        <div className={styles.Header__icon}>
+          <Image className={styles.Header__svgImage} src={logo} alt="" />
         </div>
 
         <nav
-          className={classNames(styles.App__headerNav, {
+          className={classNames(styles.Header__nav, {
             [styles.toggle__active]: toggle === true,
           })}
         >
@@ -47,7 +47,7 @@ const Header = () => {
             return (
               <a
                 key={link}
-                className={classNames(styles.App__headerLink, {
+                className={classNames(styles.Header__link, {
                   [styles.link__active]: isActive,
                 })}
                 onClick={() => handleLinkClick(link)}
@@ -58,7 +58,7 @@ const Header = () => {
           })}
         </nav>
         <div
-          className={styles.App__headerToggle}
+          className={styles.Header__toggle}
           onClick={() => handleToggleClick()}
         >
           <Image src={menu} alt="" />

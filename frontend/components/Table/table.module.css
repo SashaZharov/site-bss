@@ -15,6 +15,12 @@
   color: var(--color-black);
 }
 
+.Table__cardItemText {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .Table__cardButtonDiv {
   display: flex;
   justify-content: center;

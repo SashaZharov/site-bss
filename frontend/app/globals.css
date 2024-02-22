@@ -29,9 +29,10 @@ body {
 }
 
 @font-face {
-  font-weight: 400;
   font-family: "Oks Free";
-  src: url("../public/assets/fonts/Oks Free.otf");
+  src: url("../public/assets/fonts/Oks-Free.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
 }
 
 @media (max-width: 580px) {
