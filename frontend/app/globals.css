@@ -28,6 +28,10 @@ body {
   margin-bottom: 16px;
 }
 
+.ymaps-2-1-79-map ymaps {
+  border-radius: 24px;
+}
+
 @font-face {
   font-family: "Oks Free";
   src: url("../public/assets/fonts/Oks-Free.otf") format("opentype");

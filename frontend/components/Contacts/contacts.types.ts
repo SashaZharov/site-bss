@@ -8,8 +8,13 @@ type ButtonType = {
   link: string;
 };
 
+type MapType = {
+  coords: number[];
+};
+
 type ContactsData = {
   title: string;
+  map: MapType;
   info: ContactType[];
   button: ButtonType;
 };
