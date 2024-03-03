@@ -33,7 +33,7 @@ const Contacts: React.FC<ContactsProps> = ({ data }) => {
             <YMaps>
               <Map
                 defaultState={{
-                  center: [map.coords[0], map.coords[1] + 0.01],
+                  center: [map.coords[0], map.coords[1] + 0.008],
                   zoom: 15,
                 }}
                 className={styles.Contacts__mapElement}

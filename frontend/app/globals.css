@@ -16,6 +16,8 @@ html {
 body {
   display: flex;
   flex-direction: column;
+  font-family: "Roboto";
+  font-weight: 300;
   gap: 100px;
   background-color: var(--color-background);
   color: var(--color-white);
@@ -30,6 +32,13 @@ body {
 
 .ymaps-2-1-79-map ymaps {
   border-radius: 24px;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url("../public/assets/fonts/Roboto-Medium.ttf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {

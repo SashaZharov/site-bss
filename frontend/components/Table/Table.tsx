@@ -14,7 +14,65 @@ const Table: React.FC<TableProps> = ({ data }) => {
         <div
           className={classNames(styles.Table__card, styles.Table__cardItem1)}
         >
-          <div className={styles.Table__table}>Таблица</div>
+          <div className={styles.Table__table}>
+            {" "}
+            <table className={styles.styled__table}>
+              <thead>
+                <tr>
+                  <th>СОРТ</th>
+                  <th>Прф.</th>
+                  <th>д (мм)</th>
+                  <th>L (м)</th>
+                  <th>-</th>
+                  <th>База</th>
+                  <th>Наличие кг</th>
+                  <th>Цена с НДС 20%</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Ячейка 1</td>
+                  <td>Ячейка 2</td>
+                  <td>Ячейка 3</td>
+                  <td>Ячейка 4</td>
+                  <td>Ячейка 5</td>
+                  <td>Ячейка 6</td>
+                  <td>Ячейка 7</td>
+                  <td>Ячейка 8</td>
+                </tr>
+                <tr>
+                  <td>Ячейка 1</td>
+                  <td>Ячейка 2</td>
+                  <td>Ячейка 3</td>
+                  <td>Ячейка 4</td>
+                  <td>Ячейка 5</td>
+                  <td>Ячейка 6</td>
+                  <td>Ячейка 7</td>
+                  <td>Ячейка 8</td>
+                </tr>
+                <tr>
+                  <td>Ячейка 1</td>
+                  <td>Ячейка 2</td>
+                  <td>Ячейка 3</td>
+                  <td>Ячейка 4</td>
+                  <td>Ячейка 5</td>
+                  <td>Ячейка 6</td>
+                  <td>Ячейка 7</td>
+                  <td>Ячейка 8</td>
+                </tr>
+                <tr>
+                  <td>Ячейка 1</td>
+                  <td>Ячейка 2</td>
+                  <td>Ячейка 3</td>
+                  <td>Ячейка 4</td>
+                  <td>Ячейка 5</td>
+                  <td>Ячейка 6</td>
+                  <td>Ячейка 7</td>
+                  <td>Ячейка 8</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
         {cards.map((card, index) => (

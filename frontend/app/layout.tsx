@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
 import "./globals.css";
-
-const roboto = Roboto({ subsets: ["latin"], weight: ["300", "500"] });
 
 export const metadata: Metadata = {
   title: "БалтСпецСталь",
@@ -16,7 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body className={roboto.className}>{children}</body>
+      <body>{children}</body>
     </html>
   );
 }
