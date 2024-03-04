@@ -1,11 +1,13 @@
 import { Header, Logo, Info, Table, Contacts, Footer } from "@/components/";
 import styles from "./page.module.css";
-import { getInfoData, getTableData, getContactsData } from "@/api";
+import { getTableData } from "@/api";
+import contactsDataJson from "../components/Contacts/contactsData.json";
+import infoDataJson from "../components/Info/InfoData.json";
 
 export default function Home() {
-  const infoData = getInfoData();
+  const infoData = infoDataJson.data;
+  const contactsData = contactsDataJson.data;
   const tableData = getTableData();
-  const contactsData = getContactsData();
   return (
     <>
       <Header />

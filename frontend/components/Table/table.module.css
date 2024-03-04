@@ -16,25 +16,31 @@
 }
 
 .styled__table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 25px 0;
+  margin: 16px;
   font-size: 16px;
   text-align: left;
 }
 
-.styled__table th,
-.styled__table td {
-  padding: 12px 15px;
-  /* border-bottom: 1px solid #ddd; */
-}
-.styled__table thead {
-  background: #71717a;
-  border-radius: 16px;
+.tableHeader {
+  background-color: #f4f4f4;
+  color: #71717a;
+  font-weight: bold;
 }
 
-.styled__table th {
-  background-color: #f2f2f2;
+.tableRow {
+  display: flex;
+  border-radius: 16px;
+  min-width: 691px;
+}
+
+.tableRow:nth-child(2n-1) {
+  background-color: #f4f4f5;
+}
+
+.tableCell {
+  min-width: 80px;
+  padding: 12px 15px;
+  flex: 1;
 }
 
 .Table__cardItemText {
