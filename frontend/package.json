@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@pbe/react-yandex-maps": "^1.2.5",
     "classnames": "^2.5.1",
     "next": "14.1.0",
     "react": "^18",

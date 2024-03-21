@@ -9,6 +9,11 @@
   height: 350px;
 }
 
+.Contacts__mapElement {
+  height: 100%;
+  width: 100%;
+}
+
 .Contact__infoSection {
   display: flex;
   flex-direction: column;

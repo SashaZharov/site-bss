@@ -1,3 +1,4 @@
+"use client";
 import styles from "./contacts.module.css";
 import classNames from "classnames";
 import Image from "next/image";
@@ -5,9 +6,10 @@ import mail from "../../public/assets/img/mail-icon.svg";
 import phone from "../../public/assets/img/phone-icon.svg";
 import location from "../../public/assets/img/location-icon.svg";
 import { ContactType, ContactsProps } from "./contacts.types";
+import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
 
 const Contacts: React.FC<ContactsProps> = ({ data }) => {
-  const { title, info, button } = data;
+  const { title, map, info, button } = data;
 
   const icons: any = {
     mail,
@@ -27,7 +29,19 @@ const Contacts: React.FC<ContactsProps> = ({ data }) => {
             styles.Contacts__cardItem1
           )}
         >
-          <div className={styles.Contacts__map}></div>
+          <div className={styles.Contacts__map}>
+            <YMaps>
+              <Map
+                defaultState={{
+                  center: [map.coords[0], map.coords[1] + 0.008],
+                  zoom: 15,
+                }}
+                className={styles.Contacts__mapElement}
+              >
+                <Placemark geometry={map.coords} />
+              </Map>
+            </YMaps>
+          </div>
         </div>
         <div
           className={classNames(
