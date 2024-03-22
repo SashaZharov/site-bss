@@ -1,9 +1,9 @@
 import styles from "./info.module.css";
 import classNames from "classnames";
-import { InfoProps } from "./info.types";
+import infoDataJson from "./InfoData.json";
 
-const Info: React.FC<InfoProps> = ({ data }) => {
-  const { title, cards } = data;
+const Info: React.FC = () => {
+  const { title, cards } = infoDataJson.data;
 
   return (
     <section>

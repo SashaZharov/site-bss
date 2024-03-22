@@ -1,9 +1,39 @@
+"use client";
 import styles from "./table.module.css";
 import classNames from "classnames";
+import tableData from "./tableData.json";
+import { getTableCards } from "@/api";
+import { API_URL } from "@/urls";
+import { useEffect, useState } from "react";
 import { TableProps } from "./table.types";
+import { splitIntoSentences } from "@/utils";
 
-const Table: React.FC<TableProps> = ({ data }) => {
-  const { title, table, cards, button } = data;
+const Table: React.FC = () => {
+  const [tableDataWithCards, setTableDataWithCards] =
+    useState<TableProps>(tableData);
+
+  useEffect(() => {
+    getTableCards().then((res) => {
+      const newCards = [
+        {
+          text: splitIntoSentences(res.description1),
+        },
+        {
+          text: splitIntoSentences(res.description2),
+        },
+      ];
+      setTableDataWithCards((prev) => {
+        return {
+          data: {
+            ...prev.data,
+            cards: newCards,
+          },
+        };
+      });
+    });
+  }, [tableDataWithCards]);
+
+  const { title, table, cards, button } = tableDataWithCards.data;
 
   return (
     <section>
@@ -87,9 +117,13 @@ const Table: React.FC<TableProps> = ({ data }) => {
             )}
             {table && index === cards.length - 1 && (
               <div className={styles.Table__cardButtonDiv}>
-                <button className={styles.Table__cardButton}>
+                <a
+                  className={styles.Table__cardButton}
+                  href={`${API_URL}/download-pricelist`}
+                  download="price_list.xlsx"
+                >
                   {button.text}
-                </button>
+                </a>
               </div>
             )}
           </div>

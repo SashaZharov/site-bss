@@ -1,3 +1,1 @@
-import { getTableData } from "./getTableData";
-
-export { getTableData };
+export { getTableCards } from "./getTableCards";

@@ -7,9 +7,11 @@ import phone from "../../public/assets/img/phone-icon.svg";
 import location from "../../public/assets/img/location-icon.svg";
 import { ContactType, ContactsProps } from "./contacts.types";
 import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
+import contactData from "./contactsData.json";
+import { API_URL } from "@/urls";
 
-const Contacts: React.FC<ContactsProps> = ({ data }) => {
-  const { title, map, info, button } = data;
+const Contacts: React.FC = () => {
+  const { title, map, info, button } = contactData.data;
 
   const icons: any = {
     mail,
@@ -58,9 +60,12 @@ const Contacts: React.FC<ContactsProps> = ({ data }) => {
             ))}
           </div>
           <div className={styles.Contact__cardButtonDiv}>
-            <button className={styles.Contact__cardButton}>
+            <a
+              href={`${API_URL}/download-requisites/`}
+              className={styles.Contact__cardButton}
+            >
               {button.text}
-            </button>
+            </a>
           </div>
         </div>
       </div>
