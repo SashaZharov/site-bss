@@ -21,7 +21,6 @@ const Header = () => {
   };
 
   const handleLinkClick = (link: string) => {
-    setActiveLink(link);
     setToggle(false);
     const section = document.getElementById(link);
     if (section) {
