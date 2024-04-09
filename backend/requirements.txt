@@ -3,3 +3,5 @@ djangorestframework
 djoser
 drf_yasg
 django-cors-headers
+pandas
+openpyxl

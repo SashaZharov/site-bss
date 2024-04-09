@@ -6,6 +6,8 @@ from django.db import models
 from django.db.models.signals import pre_save, pre_delete
 from django.dispatch import receiver
 from django.contrib import admin
+import pandas as pd
+
 
 
 class Card(models.Model):
@@ -57,6 +59,32 @@ class PriceList(models.Model):
         db_table = 'pricelist'
 
 
+
+
+def parse_excel_file(file_path):
+    # Чтение данных из файла Excel в DataFrame
+    df = pd.read_excel(file_path)
+
+    # Преобразование DataFrame в список словарей
+    data = df.to_dict(orient='records')
+
+    # Очистка таблицы PriceList перед загрузкой новых данных
+    PriceList.objects.all().delete()
+
+    # Загрузка данных в модель PriceList
+    for item in data:
+        PriceList.objects.create(
+            sort=item['sort'],
+            prf=item['prf'],
+            d=item['d'],
+            l=item['l'],
+            additional=item['additional'],
+            base=item['base'],
+            product_availability=item['product_availability'],
+            price=item['price']
+        )
+
+
 def validate_file_extension(value):
     import os
     ext = os.path.splitext(value.name)[1]  # получаем расширение файла
@@ -73,15 +101,14 @@ class UploadPriceList(models.Model):
         directory_path = os.path.join(settings.MEDIA_ROOT, 'priceList')
         for filename in os.listdir(directory_path):
             file_path = os.path.join(directory_path, filename)
-            # Проверяем, является ли объект в директории файлом
             if os.path.isfile(file_path):
-                # Удаляем файл
                 os.remove(file_path)
-
         super().delete(*args, **kwargs)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
+        # После успешного сохранения файла, вызываем функцию для парсинга Excel
+        parse_excel_file(self.file.path)
 
 
 class UploadPriceListAdmin(admin.ModelAdmin):

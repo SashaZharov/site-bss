@@ -2,39 +2,45 @@
 import styles from "./table.module.css";
 import classNames from "classnames";
 import tableData from "./tableData.json";
-import { getTableCards } from "@/api";
+import { getTableCards, getTableData } from "@/api";
 import { API_URL } from "@/urls";
 import { useEffect, useState } from "react";
 import { TableProps } from "./table.types";
 import { splitIntoSentences } from "@/utils";
 
 const Table: React.FC = () => {
-  const [tableDataWithCards, setTableDataWithCards] =
+  const [tableDataWithServerInfo, setTableDataWithServerInfo] =
     useState<TableProps>(tableData);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    getTableCards().then((res) => {
-      const newCards = [
-        {
-          text: splitIntoSentences(res.description1),
-        },
-        {
-          text: splitIntoSentences(res.description2),
-        },
-      ];
-      setTableDataWithCards((prev) => {
-        return {
-          data: {
-            ...prev.data,
-            cards: newCards,
-          },
-        };
-      });
-    });
-  }, [tableDataWithCards]);
+    if (!isMounted) {
+      Promise.all([getTableCards(), getTableData()]).then(
+        ([cardsRes, tableRes]) => {
+          const newCards = [
+            {
+              text: splitIntoSentences(cardsRes.description1),
+            },
+            {
+              text: splitIntoSentences(cardsRes.description2),
+            },
+          ];
+          setTableDataWithServerInfo((prev) => ({
+            data: {
+              ...prev.data,
+              cards: newCards,
+              table: tableRes,
+            },
+          }));
+          console.log(tableRes);
+          setIsMounted(true);
+        }
+      );
+    }
+  }, [isMounted]);
 
-  const { title, table, cards, button } = tableDataWithCards.data;
-
+  const { title, table, cards, button } = tableDataWithServerInfo.data;
+  console.log(tableDataWithServerInfo.data.cards);
   return (
     <section>
       <h2 className="Section__title" id="Прайс лист">
@@ -56,46 +62,21 @@ const Table: React.FC = () => {
                 <div className={styles.tableCell}>Наличие кг</div>
                 <div className={styles.tableCell}>Цена с НДС 20%</div>
               </div>
-              <div className={styles.tableRow}>
-                <div className={styles.tableCell}>Ячейка 1</div>
-                <div className={styles.tableCell}>Ячейка 2</div>
-                <div className={styles.tableCell}>Ячейка 3</div>
-                <div className={styles.tableCell}>Ячейка 4</div>
-                <div className={styles.tableCell}>Ячейка 5</div>
-                <div className={styles.tableCell}>Ячейка 6</div>
-                <div className={styles.tableCell}>Ячейка 7</div>
-                <div className={styles.tableCell}>Ячейка 8</div>
-              </div>
-              <div className={styles.tableRow}>
-                <div className={styles.tableCell}>Ячейка 1</div>
-                <div className={styles.tableCell}>Ячейка 2</div>
-                <div className={styles.tableCell}>Ячейка 3</div>
-                <div className={styles.tableCell}>Ячейка 4</div>
-                <div className={styles.tableCell}>Ячейка 5</div>
-                <div className={styles.tableCell}>Ячейка 6</div>
-                <div className={styles.tableCell}>Ячейка 7</div>
-                <div className={styles.tableCell}>Ячейка 8</div>
-              </div>
-              <div className={styles.tableRow}>
-                <div className={styles.tableCell}>Ячейка 1</div>
-                <div className={styles.tableCell}>Ячейка 2</div>
-                <div className={styles.tableCell}>Ячейка 3</div>
-                <div className={styles.tableCell}>Ячейка 4</div>
-                <div className={styles.tableCell}>Ячейка 5</div>
-                <div className={styles.tableCell}>Ячейка 6</div>
-                <div className={styles.tableCell}>Ячейка 7</div>
-                <div className={styles.tableCell}>Ячейка 8</div>
-              </div>
-              <div className={styles.tableRow}>
-                <div className={styles.tableCell}>Ячейка 1</div>
-                <div className={styles.tableCell}>Ячейка 2</div>
-                <div className={styles.tableCell}>Ячейка 3</div>
-                <div className={styles.tableCell}>Ячейка 4</div>
-                <div className={styles.tableCell}>Ячейка 5</div>
-                <div className={styles.tableCell}>Ячейка 6</div>
-                <div className={styles.tableCell}>Ячейка 7</div>
-                <div className={styles.tableCell}>Ячейка 8</div>
-              </div>
+              {table &&
+                table.map((row, index) => (
+                  <div key={index} className={styles.tableRow}>
+                    <div className={styles.tableCell}>{row.sort}</div>
+                    <div className={styles.tableCell}>{row.prf}</div>
+                    <div className={styles.tableCell}>{row.d}</div>
+                    <div className={styles.tableCell}>{row.l}</div>
+                    <div className={styles.tableCell}>{row.additional}</div>
+                    <div className={styles.tableCell}>{row.base}</div>
+                    <div className={styles.tableCell}>
+                      {row.product_availability}
+                    </div>
+                    <div className={styles.tableCell}>{row.price}</div>
+                  </div>
+                ))}
             </div>
           </div>
         </div>

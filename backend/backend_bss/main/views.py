@@ -2,12 +2,17 @@ import os
 
 from django.shortcuts import render
 
-# Create your views here.
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+
 
 from django.http import HttpResponse, JsonResponse
 
 from backend_bss import settings
-from main.models import get_card_from_db
+from main.models import get_card_from_db, PriceList
+from .serializers import PriceListSerializer
+
 
 
 def download_requisites(request):
@@ -60,3 +65,10 @@ def get_cards(request):
         return response
     else:
         return HttpResponse('Cards not found', status=404)
+
+
+def price_list_view(request):
+    if request.method == 'GET':
+        pricelist = PriceList.objects.all()
+        serializer = PriceListSerializer(pricelist, many=True)
+        return JsonResponse(serializer.data, safe=False)
