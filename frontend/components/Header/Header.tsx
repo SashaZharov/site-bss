@@ -11,11 +11,6 @@ const Header = () => {
   const [activeLink, setActiveLink] = useState("Важное");
   const [toggle, setToggle] = useState(false);
 
-  // useEffect(() => {
-  //   const section = document.getElementById("header");
-  //   console.log(section);
-  // }, []);
-
   const handleToggleClick = () => {
     setToggle(!toggle);
   };
@@ -24,7 +19,12 @@ const Header = () => {
     setToggle(false);
     const section = document.getElementById(link);
     if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
+      const scrollPosition = section.offsetTop - 50;
+      window.scrollTo({
+        top: scrollPosition,
+        behavior: "smooth",
+      });
+      setActiveLink(link);
     }
   };
 
