@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='uploadpricelist',
             name='file',
-            field=models.FileField(error_messages={'invalid': 'Only xlsx or xls files!'}, upload_to='priceList', validators=[main.models.validate_file_extension]),
+            field=models.FileField(error_messages={'invalid': 'Only xlsx or xls files!'}, upload_to='priceList', validators=[main.models.validate_pricelist_extension]),
         ),
         migrations.AlterField(
             model_name='uploadrequisite',

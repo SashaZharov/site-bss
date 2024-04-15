@@ -46,19 +46,17 @@ def prevent_card_deletion(sender, instance, **kwargs):
 
 class PriceList(models.Model):
     id = models.AutoField(primary_key=True)
-    sort = models.CharField(max_length=100)
-    prf = models.CharField(max_length=100)
-    d = models.CharField(max_length=100)
-    l = models.CharField(max_length=100)
-    additional = models.CharField(max_length=100)
-    base = models.CharField(max_length=100)
-    product_availability = models.CharField(max_length=100)
-    price = models.CharField(max_length=100)
+    sort = models.CharField(max_length=100, verbose_name='Сорт')
+    prf = models.CharField(max_length=100, verbose_name='Марка')
+    d = models.CharField(max_length=100, verbose_name='Д (мм)')
+    l = models.CharField(max_length=100, verbose_name='L (м)')
+    additional = models.CharField(max_length=100, verbose_name='Доп. поле')
+    base = models.CharField(max_length=100, verbose_name='База')
+    product_availability = models.CharField(max_length=100, verbose_name='Наличие (кг)')
+    price = models.CharField(max_length=100, verbose_name='Цена с НДС')
 
     class Meta:
         db_table = 'pricelist'
-
-
 
 
 def parse_excel_file(file_path):
@@ -85,7 +83,7 @@ def parse_excel_file(file_path):
         )
 
 
-def validate_file_extension(value):
+def validate_pricelist_extension(value):
     import os
     ext = os.path.splitext(value.name)[1]  # получаем расширение файла
     valid_extensions = ['.xlsx', '.xls']  # список допустимых расширений
@@ -94,7 +92,7 @@ def validate_file_extension(value):
 
 
 class UploadPriceList(models.Model):
-    file = models.FileField(upload_to='priceList', validators=[validate_file_extension],
+    file = models.FileField(upload_to='priceList', validators=[validate_pricelist_extension],
                             error_messages={'invalid': 'Only xlsx or xls files!'})
 
     def delete(self, *args, **kwargs):
@@ -131,8 +129,39 @@ def limit_upload(sender, instance, **kwargs):
         raise ValidationError("Можно добавить только один файл")
 
 
-class UploadRequisite(models.Model):
-    file = models.FileField(upload_to='requisites')
+def validate_requisite_extension(value):
+    import os
+    ext = os.path.splitext(value.name)[1]  # получаем расширение файла
+    valid_extensions = ['.pdf']  # список допустимых расширений
+    if ext.lower() not in valid_extensions:
+        raise ValidationError('Файлы можно сохранять только в формате .pdf')
 
-    def __str__(self):
-        return self.file.name
+
+class UploadRequisite(models.Model):
+    file = models.FileField(upload_to='requisites', validators=[validate_requisite_extension],
+                            error_messages={'invalid': 'Only pdf files!'})
+
+    def delete(self, *args, **kwargs):
+        directory_path = os.path.join(settings.MEDIA_ROOT, 'requisites')
+        for filename in os.listdir(directory_path):
+            file_path = os.path.join(directory_path, filename)
+            if os.path.isfile(file_path):
+                os.remove(file_path)
+        super().delete(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+
+@receiver(pre_save, sender=UploadRequisite)
+def limit_upload(sender, instance, **kwargs):
+    if UploadRequisite.objects.exists() and not instance.pk:
+        raise ValidationError("Можно добавить только один файл")
+
+    if instance.pk:
+        # Если объект уже существует (т.е. редактирование), просто проходим проверку
+        return
+
+    if UploadRequisite.objects.exists():
+        # Если уже есть запись в базе данных, вызываем ValidationError
+        raise ValidationError("Можно добавить только один файл")

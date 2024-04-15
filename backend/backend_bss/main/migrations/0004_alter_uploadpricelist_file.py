@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='uploadpricelist',
             name='file',
-            field=models.FileField(error_messages='Only xlsx files!', upload_to='fileStorage/', validators=[main.models.validate_file_extension]),
+            field=models.FileField(error_messages='Only xlsx files!', upload_to='fileStorage/', validators=[main.models.validate_pricelist_extension]),
         ),
     ]
