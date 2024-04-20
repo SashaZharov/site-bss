@@ -9,10 +9,8 @@ from django.contrib import admin
 import pandas as pd
 
 
-
 class Card(models.Model):
     description1 = models.TextField()
-    description2 = models.TextField()
 
     def __str__(self):
         return f"Card {self.id}"
@@ -23,8 +21,13 @@ class Card(models.Model):
 
 def get_card_from_db():
     try:
-        card = Card.objects.first()
-        return card
+        # Проверяем, есть ли карточка с одним полем
+        card = Card.objects.filter(description2__isnull=True).first()
+        if card:
+            return card
+        else:
+            # Если карточка с одним полем не найдена, возвращаем карточку с двумя полями
+            return Card.objects.first()
     except Card.DoesNotExist:
         return None
 
@@ -32,10 +35,9 @@ def get_card_from_db():
 @receiver(pre_save, sender=Card)
 def limit_card_creation(sender, instance, **kwargs):
     # Проверяем, существует ли уже объект Card
-    if Card.objects.exists() and not instance.id:
-        # Если объект Card уже существует и текущий объект еще не сохранен в базу данных,
-        # вызываем ValidationError, чтобы предотвратить его сохранение
-        raise ValidationError("Можно создать только 1 карточку")
+    if Card.objects.count() >= 2:
+        # Если уже есть две карточки, вызываем ValidationError, чтобы предотвратить создание новой
+        raise ValidationError("Можно создать только 2 карточки")
 
 
 @receiver(pre_delete, sender=Card)
@@ -46,6 +48,7 @@ def prevent_card_deletion(sender, instance, **kwargs):
 
 class PriceList(models.Model):
     id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100, verbose_name='Название')
     sort = models.CharField(max_length=100, verbose_name='Сорт')
     prf = models.CharField(max_length=100, verbose_name='Марка')
     d = models.CharField(max_length=100, verbose_name='Д (мм)')
@@ -72,6 +75,7 @@ def parse_excel_file(file_path):
     # Загрузка данных в модель PriceList
     for item in data:
         PriceList.objects.create(
+            name=item['name'],
             sort=item['sort'],
             prf=item['prf'],
             d=item['d'],
