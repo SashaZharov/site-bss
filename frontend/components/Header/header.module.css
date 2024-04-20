@@ -30,6 +30,7 @@
 
 .Header__icon {
   user-select: none;
+  cursor: pointer;
 }
 
 .Header__nav {

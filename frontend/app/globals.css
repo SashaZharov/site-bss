@@ -13,6 +13,10 @@ html {
   --color-orange: #ffbc00;
 }
 
+::-webkit-scrollbar {
+  width: 0px;
+}
+
 body {
   display: flex;
   flex-direction: column;

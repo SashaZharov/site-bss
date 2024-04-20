@@ -11,6 +11,11 @@ const Header = () => {
   const [activeLink, setActiveLink] = useState("Важное");
   const [toggle, setToggle] = useState(false);
 
+  const handleImgClick = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setActiveLink("Важное");
+  };
+
   const handleToggleClick = () => {
     setToggle(!toggle);
   };
@@ -31,7 +36,7 @@ const Header = () => {
   return (
     <header className={styles.App__headerRoot} id="header">
       <div className={styles.App__header}>
-        <div className={styles.Header__icon}>
+        <div className={styles.Header__icon} onClick={() => handleImgClick()}>
           <Image className={styles.Header__svgImage} src={logo} alt="" />
         </div>
 
