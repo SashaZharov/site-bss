@@ -14,7 +14,6 @@ from main.models import get_card_from_db, PriceList
 from .serializers import PriceListSerializer
 
 
-
 def download_requisites(request):
     folder_path = os.path.join(settings.MEDIA_ROOT, 'requisites')
     file_list = os.listdir(folder_path)
@@ -52,17 +51,18 @@ def download_pricelist(request):
 
 
 def get_cards(request):
-    card = get_card_from_db()
+    cards = get_card_from_db()
 
-    if card is not None:
-        card_data = {
-            'description1': card.description1,
-            'description2': card.description2,
-        }
+    if cards:
+        cards_data = []
 
-        response = JsonResponse(card_data, safe=False)
+        for card in cards:
+            card_data = {
+                'description': card.description1,
+            }
+            cards_data.append(card_data)
 
-        return response
+        return JsonResponse(cards_data, safe=False)
     else:
         return HttpResponse('Cards not found', status=404)
 

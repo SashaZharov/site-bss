@@ -21,23 +21,18 @@ class Card(models.Model):
 
 def get_card_from_db():
     try:
-        # Проверяем, есть ли карточка с одним полем
-        card = Card.objects.filter(description2__isnull=True).first()
-        if card:
-            return card
-        else:
-            # Если карточка с одним полем не найдена, возвращаем карточку с двумя полями
-            return Card.objects.first()
+        cards = Card.objects.all()
+        return list(cards)
     except Card.DoesNotExist:
-        return None
+        return []
 
 
 @receiver(pre_save, sender=Card)
 def limit_card_creation(sender, instance, **kwargs):
     # Проверяем, существует ли уже объект Card
-    if Card.objects.count() >= 2:
-        # Если уже есть две карточки, вызываем ValidationError, чтобы предотвратить создание новой
-        raise ValidationError("Можно создать только 2 карточки")
+    if not instance.id:  # Если объект еще не сохранен в базу данных, значит, он новый
+        if Card.objects.count() >= 2:
+            raise ValidationError("Можно создать только 2 карточки")
 
 
 @receiver(pre_delete, sender=Card)
